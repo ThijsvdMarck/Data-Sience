@@ -13,10 +13,10 @@ import pandas as pd
 import os
 
 import THIJS.TVDM as tv
-
+import ARGENIS.ARGENIS as ar
 
 tv.THIJS(1,1)
-
+ar.THIJS(1,2)
 
 #%% Load Kaggle API data
 os.environ['KAGGLE_USERNAME'] = 'thijsvandermarck'
