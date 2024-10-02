@@ -24,9 +24,9 @@ os.environ['KAGGLE_KEY'] = '07f3e809702e7b2b43e9e7d4858933f1'
  
 kg.api.authenticate()
  
-kg.api.dataset_download_files(dataset = "moazzimalibhatti/co2-emission-by-countries-year-wise-17502022", path='on.zip', unzip=True)
+kg.api.dataset_download_files(dataset = "moazzimalibhatti/co2-emission-by-countries-year-wise-17502022", path='Data-Sience/on.zip', unzip=True)
  
-df = pd.read_csv('on.zip/CO2 emission by countries.csv', encoding='ISO-8859-1')
+df = pd.read_csv('Data-Sience/on.zip/CO2 emission by countries.csv', encoding='ISO-8859-1')
 
 # Lees het bestand 'CO2 emission by countries.csv' in als een dataframe.
 # df = pd.read_csv('CO2 emission by countries.csv', encoding='latin1')
@@ -79,7 +79,7 @@ df['CO2 emission (Tons)'] = df.groupby('Country')['CO2 emission (Tons)'].diff()
 df['CO2 emission (Tons)'].fillna(0, inplace=True)
 
 # Tweede dataset toevoegen om population per jaar (1960-2020) te krijgen. 
-df2 = pd.read_csv('C:\\Users\\robva\\OneDrive\\Documenten\\GitHub\\Data-Sience\\DATA\\World-population-by-countries-dataset.csv', encoding='latin1')
+df2 = pd.read_csv('Data-Sience/DATA/World-population-by-countries-dataset.csv', encoding='latin1')
 
 # Verwijder de rijen in de kolommen waar er 5% of minder waardes ontbreken.
 threshold2=len(df2)*0.05
