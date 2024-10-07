@@ -83,7 +83,13 @@ LaadpalenGebruik = pd.read_csv(file_path)
 
 tv.plot(LaadpalenPunten)
 tv.plotLaatpaalgebruik(LaadpalenGebruik)
+
+
+
+
 ma.plotLaadpalenPunten(LaadpalenPunten)
+
+
 # #%% Eerst plot
 # # Streamlit UI opzetten
 # st.title('CO2 Emissions per Country')
