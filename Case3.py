@@ -15,7 +15,7 @@ import requests
 
 import THIJS.TVDM as tv
 # import ARGENIS.ARGENIS as ar
-# import MACKENLY.MACKENLY as ma
+import MACKENLY.MACKENLY as ma
 import TIM.TIM as tl
 
 
@@ -84,6 +84,12 @@ print(LaadpalenGebruik.info())
 
 tv.plot(LaadpalenPunten)
 tl.gebruik(LaadpalenGebruik)
+
+
+
+
+ma.plotLaadpalenPunten(LaadpalenPunten)
+
 
 # #%% Eerst plot
 # # Streamlit UI opzetten
