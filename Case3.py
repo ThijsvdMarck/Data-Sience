@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import streamlit as st
 import pandas as pd
-import os
+import os 
 import requests
 
 
@@ -68,7 +68,8 @@ print(file_path)
 
 # # Reading the CSV file
 LaadpalenGebruik = pd.read_csv(file_path)
-
+print(LaadpalenGebruik.head())
+print(LaadpalenGebruik.info())
 
 # # Build the path to the CSV file in the subfolder
 # file_path = os.path.join(current_dir, 'DATA', 'cars.csv')
@@ -82,7 +83,7 @@ LaadpalenGebruik = pd.read_csv(file_path)
 #%% Streamlit
 
 tv.plot(LaadpalenPunten)
-tv.plotLaatpaalgebruik(LaadpalenGebruik)
+tl.gebruik(LaadpalenGebruik)
 
 # #%% Eerst plot
 # # Streamlit UI opzetten
