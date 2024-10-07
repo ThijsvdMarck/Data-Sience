@@ -5,7 +5,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 import streamlit as st
-import kaggle as kg
 import pandas as pd
 import os
 

@@ -16,7 +16,7 @@ import requests
 import THIJS.TVDM as tv
 # import ARGENIS.ARGENIS as ar
 # import MACKENLY.MACKENLY as ma
-# import TIM.TIM as ti
+import TIM.TIM as tl
 
 
 
@@ -56,18 +56,18 @@ LaadpalenPunten = Laadpalen.drop(columns=columns_to_drop, errors='ignore')
 
 
 # # Get the directory where the current script is located
-# current_dir = os.path.dirname(os.path.abspath(__file__))
-# print(current_dir)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+print(current_dir)
 
 
 
 # # Build the path to the CSV file in the subfolder
-# file_path = os.path.join(current_dir, 'DATA', 'laadpaaldata.csv')
-# print(file_path)
+file_path = os.path.join(current_dir, 'DATA', 'laadpaaldata.csv')
+print(file_path)
 
 
 # # Reading the CSV file
-# LaadpalenGebruik = pd.read_csv(file_path)
+LaadpalenGebruik = pd.read_csv(file_path)
 
 
 # # Build the path to the CSV file in the subfolder
@@ -82,6 +82,7 @@ LaadpalenPunten = Laadpalen.drop(columns=columns_to_drop, errors='ignore')
 #%% Streamlit
 
 tv.plot(LaadpalenPunten)
+tv.plotLaatpaalgebruik(LaadpalenGebruik)
 
 # #%% Eerst plot
 # # Streamlit UI opzetten
