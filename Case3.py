@@ -84,11 +84,18 @@ print(LaadpalenGebruik.info())
 
 tv.plot(LaadpalenPunten)
 tl.gebruik(LaadpalenGebruik)
-
-
-
-
 ma.plotLaadpalenPunten(LaadpalenPunten)
+
+
+
+
+
+
+
+
+
+
+
 
 
 # #%% Eerst plot
