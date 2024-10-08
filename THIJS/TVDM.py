@@ -19,10 +19,10 @@ def THIJS(a,b):
 def plot(df):
     df = df
 
-    st.title('LOLOLOL')
-    fig = px.line(df, x='DateLastVerified', y='IsRecentlyVerified')
-    fig.update_xaxes(dtick=10)
-    st.plotly_chart(fig)
+    # st.title('LOLOLOL')
+    # fig = px.line(df, x='DateLastVerified', y='IsRecentlyVerified')
+    # fig.update_xaxes(dtick=10)
+    # st.plotly_chart(fig)
 
     # # Streamlit UI opzetten
     # st.title('CO2 Emissions per Country')
