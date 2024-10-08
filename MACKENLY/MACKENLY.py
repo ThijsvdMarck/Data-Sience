@@ -11,5 +11,3 @@ import os
 def THIJS(a,b):
     return print('THIJS\n',a+b)
 
-def plotLaadpalenPunten(df):
-    
