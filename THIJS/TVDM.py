@@ -52,6 +52,9 @@ def plotAantalElektrischeAutosTegenDatum(df):
     df_groupby_day = df[df['merk'] == selected_brand].groupby('datum_eerste_toelating').size().reset_index(name='car_count')
     df_groupby_day['cumulative_count'] = df_groupby_day['car_count'].cumsum()
 
+    #nog een totaal toevoegen
+
+
     fig = px.line(df_groupby_day, 
                 x='datum_eerste_toelating', 
                 y='cumulative_count', 

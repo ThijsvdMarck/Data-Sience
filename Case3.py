@@ -87,7 +87,7 @@ if page == "Laadpaal Punten":
     print("Laadpaal Punten")
 elif page == "Laadpaal Gebruik":
     # LaadpalenGebruik
-    # tl.gebruik(LaadpalenGebruik)
+    tl.gebruik(LaadpalenGebruik)
     print("Laadpaal Gebruik")
 elif page == "Elektrische  Auto's":
     # ElektrischeAutos
