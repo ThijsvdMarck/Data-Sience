@@ -71,18 +71,21 @@ LaadpalenGebruik = pd.read_csv(file_path)
 print(LaadpalenGebruik.head())
 print(LaadpalenGebruik.info())
 
-# # Build the path to the CSV file in the subfolder
-# file_path = os.path.join(current_dir, 'DATA', 'cars.csv')
+# Build the path to the CSV file in the subfolder
+file_path = os.path.join(current_dir, 'DATA', 'cars.csv')
 
-# # Reading the CSV file
-# ElektrischeAutos = pd.read_csv(file_path) #moet nog met API en schoongemaakt worden
+# Reading the CSV file
+ElektrischeAutos = pd.read_csv(file_path) #moet nog met API en schoongemaakt worden
 
 
 
 #%%__________________________________________________________________________________
 #%% Streamlit
 
-tv.plot(LaadpalenPunten)
+tv.MainLayourST()
+
+tv.plot(ElektrischeAutos)
+
 tl.gebruik(LaadpalenGebruik)
 
 

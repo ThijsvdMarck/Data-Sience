@@ -16,6 +16,16 @@ def THIJS(a,b):
 
     return print('THIJS\n',a+b)
 
+
+def MainLayourST():
+    st.set_page_config(
+        page_title="THIJS",
+        page_icon=":smile:",
+    )
+    st.title("THIJS")
+    st.sidebar.succes("select page above.")
+
+    
 def plot(df):
     df = df
 
