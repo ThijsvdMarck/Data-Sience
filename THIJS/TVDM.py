@@ -18,6 +18,7 @@ def LayoutSettings():
     )
     
     st.title('Informatie over verschillende elektische ascpeten')
+    st.write('Door Team 20: Tim Lind, Thijs van der Marck, Argenis, Mackenly')
     st.write("""
     Op deze pagina vind je informatie over drie belangrijke onderwerpen die te maken hebben met elektrisch rijden:
 
@@ -31,24 +32,38 @@ def LayoutSettings():
 def DropdownForPageSelect():
 
     options = ["Laadpaal Punten", "Laadpaal Gebruik", "Elektrische  Auto's"]
-    
     page = st.selectbox('Kies een onderwerp waar u meer over wilt weten:', options)
-
 
     return page
 
     
+def plotAantalElektrischeAutosTegenDatum(df):
 
 
+    df['datum_eerste_toelating'] = pd.to_datetime(df['datum_eerste_toelating'],format="%Y%m%d")
 
 
-def plot(df):
-    df = df
+    st.title('Elektrische Auto\'s in Nederland')
 
-    # st.title('LOLOLOL')
-    # fig = px.line(df, x='DateLastVerified', y='IsRecentlyVerified')
-    # fig.update_xaxes(dtick=10)
-    # st.plotly_chart(fig)
+
+    brands = df['merk'].unique()
+
+    selected_brand = st.selectbox('Kies een automerk:', brands)
+    df_groupby_day = df[df['merk'] == selected_brand].groupby('datum_eerste_toelating').size().reset_index(name='car_count')
+    df_groupby_day['cumulative_count'] = df_groupby_day['car_count'].cumsum()
+
+    fig = px.line(df_groupby_day, 
+                x='datum_eerste_toelating', 
+                y='cumulative_count', 
+                title='Totaal aantal %s elektrische Auto\'s in Nederland' % selected_brand, 
+                labels={
+                    'datum_eerste_toelating': 'Datum', 
+                    'cumulative_count': 'Aantal %s elektrische Auto\'s ' % selected_brand
+                }
+                )
+    st.plotly_chart(fig)
+
+
 
     # # Streamlit UI opzetten
     # st.title('CO2 Emissions per Country')

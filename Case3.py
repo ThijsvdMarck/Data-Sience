@@ -81,7 +81,6 @@ ElektrischeAutos = pd.read_csv(file_path) #moet nog met API en schoongemaakt wor
 tv.LayoutSettings()
 
 
-
 page = tv.DropdownForPageSelect()
 if page == "Laadpaal Punten":
     # "Laadpaal Punten"
@@ -92,7 +91,7 @@ elif page == "Laadpaal Gebruik":
     print("Laadpaal Gebruik")
 elif page == "Elektrische  Auto's":
     # ElektrischeAutos
-    tv.plot(ElektrischeAutos)
+    tv.plotAantalElektrischeAutosTegenDatum(ElektrischeAutos)
 
 
 
