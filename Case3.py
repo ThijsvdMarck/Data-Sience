@@ -20,10 +20,7 @@ import TIM.TIM as tl
 
 
 
-tv.THIJS(1,1)
-# ar.THIJS(1,2)
-# ma.THIJS(2,2)
-# ti.THIJS(2,3)
+
 
 #%% Load Kaggle API data
 # os.environ['KAGGLE_USERNAME'] = 'thijsvandermarck'
@@ -81,12 +78,26 @@ ElektrischeAutos = pd.read_csv(file_path) #moet nog met API en schoongemaakt wor
 
 #%%__________________________________________________________________________________
 #%% Streamlit
+tv.LayoutSettings()
 
-tv.MainLayourST()
 
-tv.plot(ElektrischeAutos)
 
-tl.gebruik(LaadpalenGebruik)
+page = tv.DropdownForPageSelect()
+if page == "Laadpaal Punten":
+    # "Laadpaal Punten"
+    print("Laadpaal Punten")
+elif page == "Laadpaal Gebruik":
+    # LaadpalenGebruik
+    # tl.gebruik(LaadpalenGebruik)
+    print("Laadpaal Gebruik")
+elif page == "Elektrische  Auto's":
+    # ElektrischeAutos
+    tv.plot(ElektrischeAutos)
+
+
+
+
+
 
 
 

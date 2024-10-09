@@ -8,24 +8,40 @@ import streamlit as st
 import pandas as pd
 import os
 
-def THIJS(a,b):
-    df1 = a
-    df2 = b
 
 
 
-    return print('THIJS\n',a+b)
-
-
-def MainLayourST():
+def LayoutSettings():
     st.set_page_config(
-        page_title="THIJS",
-        page_icon=":smile:",
+        page_title="Case 3",
+        page_icon="⚡",
     )
-    st.title("THIJS")
-    st.sidebar.succes("select page above.")
+    
+    st.title('Informatie over verschillende elektische ascpeten')
+    st.write("""
+    Op deze pagina vind je informatie over drie belangrijke onderwerpen die te maken hebben met elektrisch rijden:
+
+    1. **Laadpaal Punten**: Alles over de locaties, beschikbaarheid en installatie van laadpalen voor elektrische voertuigen.
+    2. **Laadpaal Gebruik**: Inzicht in hoe laadpalen worden gebruikt, laadtijden, en tips voor efficiënt laden.
+    3. **Elektrische Auto's**: Informatie over de nieuwste elektrische auto's, hun prestaties, voordelen en hoe ze bijdragen aan een duurzamere toekomst.
+
+    Verken elk onderwerp om meer te ontdekken over de toekomst van elektrisch vervoer!
+    """)
+
+def DropdownForPageSelect():
+
+    options = ["Laadpaal Punten", "Laadpaal Gebruik", "Elektrische  Auto's"]
+    
+    page = st.selectbox('Kies een onderwerp waar u meer over wilt weten:', options)
+
+
+    return page
 
     
+
+
+
+
 def plot(df):
     df = df
 
@@ -96,3 +112,4 @@ def plot(df):
     # - **% of World** shows the percentage of total global land area occupied by this country.
     # - **Population (2022)** shows the estimated population of the country in 2022.
     # """)
+# %%
