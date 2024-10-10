@@ -22,12 +22,12 @@ def laadpalen_kaart_adres_staat(df):
     st.header("Interactieve kaart van laadpalen")
     st.write("""
     Deze interactieve kaart toont de locaties van laadpalen voor elektrische voertuigen in Nederland.
-    Gebruik de zijbalk om laadpalen te filteren op plaats. Klik op de markeringen voor meer details over elke laadpaal,
-    het adres, plaats en postcode.
+    Gebruik de onderstaande drop-down om laadpalen te filteren op plaats. Klik op de markeringen voor meer details over elke laadpaal,
+    inclusief het adres, plaats en postcode.
     """)
 
-    # Create a Streamlit sidebar with a multi-select widget for towns
-    selected_towns = st.sidebar.multiselect('Selecteer Plaatsen', df['AddressInfo.Town'].unique())
+    # Create a drop-down widget for towns in the main area (replacing the sidebar)
+    selected_towns = st.multiselect('Selecteer Plaatsen', df['AddressInfo.Town'].unique())
 
     # Filter the dataframe based on selected towns
     if selected_towns:
@@ -62,10 +62,6 @@ def laadpalen_kaart_adres_staat(df):
 
     # Display the map in the Streamlit app using st_folium
     st_folium(map_laadpalen, width=700, height=500)
-
-# laadpalen_kaart_adres_staat(LaadpalenPunten)
- 
-
 
 
 #%%  used a Nominatim API to fill AddressInfo.StateOrProvince to use as revelant data
@@ -136,9 +132,6 @@ def laadpalen_kaart_adres_staat(df):
 
 # Define a function that takes a DataFrame as input
 def laadpalen_visualization(df):
-
-    
-    
     # Filter out missing values in 'AddressInfo.StateOrProvince'
     df_provinces = df.dropna(subset=['AddressInfo.StateOrProvince'])
 
@@ -148,33 +141,33 @@ def laadpalen_visualization(df):
     # Count occurrences of each province
     province_counts = df_provinces['AddressInfo.StateOrProvince'].value_counts()
 
-    # Create a pie chart using Plotly
-    fig_pie = px.pie(province_counts, values=province_counts.values, names=province_counts.index, 
-                     title="Percentage of Charging Stations by Province", hole=0.4)
+    # Keep only the top 8 provinces
+    top_8_provinces = province_counts.nlargest(8)
+
+    # Create a pie chart using Plotly for the top 8 provinces
+    fig_pie = px.pie(top_8_provinces, values=top_8_provinces.values, names=top_8_provinces.index, 
+                     title="Percentage of Charging Stations by Top 8 Provinces", hole=0.4)
     st.plotly_chart(fig_pie)
 
-    # Task 2: Heatmap of Charging Stations by Province
-    st.title("Heatmap of Charging Stations by Province")
+# # Function to generate a heatmap of charging stations by province
+# def laadpalen_heatmap(df_provinces):
+#     ### Heatmap of Charging Stations by Province ###
+#     st.title("Heatmap of Charging Stations by Province")
 
-    # Group the data by province and get the counts
-    province_lat_lon = df_provinces[['AddressInfo.StateOrProvince', 'AddressInfo.Latitude', 'AddressInfo.Longitude']]
-    province_grouped = province_lat_lon.groupby('AddressInfo.StateOrProvince').count()
+#     # Group the data by province and get the counts
+#     province_lat_lon = df_provinces[['AddressInfo.StateOrProvince', 'AddressInfo.Latitude', 'AddressInfo.Longitude']]
+#     province_grouped = province_lat_lon.groupby('AddressInfo.StateOrProvince').count()
 
-    # Create a base map centered on the Netherlands
-    m = folium.Map(location=[52.1326, 5.2913], zoom_start=7)
+#     # Create a base map centered on the Netherlands
+#     m = folium.Map(location=[52.1326, 5.2913], zoom_start=7)
 
-    # Prepare data for HeatMap
-    heat_data = [[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']] for index, row in df_provinces.iterrows()]
+#     # Prepare data for HeatMap
+#     heat_data = [[row['AddressInfo.Latitude'], row['AddressInfo.Longitude']] for index, row in df_provinces.iterrows()]
 
-    # Add the heatmap layer
-    HeatMap(heat_data).add_to(m)
+#     # Add the heatmap layer
+#     HeatMap(heat_data).add_to(m)
 
-    # Display the map in Streamlit
-    st_folium(m, width=700, height=500)
+#     # Display the map in Streamlit
+#     st_folium(m, width=1100, height=900)
 
-# Example of calling the function with a DataFrame
-# Load CSV data into a dataframe
-# laadpalenpunt_met_state = pd.read_csv('laadpalenpunt_met_state.csv')
-
-# laadpalen_visualization(laadpalenpunt_met_state)
 

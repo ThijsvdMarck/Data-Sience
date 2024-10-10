@@ -99,15 +99,13 @@ if page == "Laadpaal Punten":
     # "Laadpaal Punten"
     ma.laadpalen_kaart_adres_staat(LaadpalenPunten)
     ma.laadpalen_visualization(laadpalenpunt_met_state)
+    # ma.laadpalen_heatmap(laadpalenpunt_met_state)
 elif page == "Laadpaal Gebruik":
     # LaadpalenGebruik
     tl.gebruik(LaadpalenGebruik)
 elif page == "Elektrische  Auto's":
     # ElektrischeAutos
     tv.plotAantalElektrischeAutosTegenDatum(ElektrischeAutos)
-
-
-
 
 
 
