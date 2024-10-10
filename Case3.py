@@ -11,6 +11,11 @@ import streamlit as st
 import pandas as pd
 import os 
 import requests
+# need to be added
+from streamlit_folium import st_folium 
+from folium.plugins import MarkerCluster
+import folium
+from folium.plugins import HeatMap
 
 
 import THIJS.TVDM as tv
@@ -76,6 +81,14 @@ ElektrischeAutos = pd.read_csv(file_path) #moet nog met API en schoongemaakt wor
 
 
 
+# # Build the path to the CSV file in the subfolder
+# file_path = os.path.join(current_dir, 'DATA', 'laadpalenpunt_met_state.csv')
+
+# # Reading csv file for Province of Netherlands approx missing 10% of total LaadpalenPunten
+# laadpalenpunt_met_state = pd.read_csv('laadpalenpunt_met_state.csv')
+
+
+
 #%%__________________________________________________________________________________
 #%% Streamlit
 tv.LayoutSettings()
@@ -95,7 +108,8 @@ elif page == "Elektrische  Auto's":
 
 
 
-
+ma.laadpalen_kaart_adres_staat(LaadpalenPunten)
+ma.laadpalen_visualization(laadpalenpunt_met_state)
 
 
 
