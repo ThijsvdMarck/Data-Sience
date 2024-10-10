@@ -136,6 +136,9 @@ def laadpalen_kaart_adres_staat(df):
 
 # Define a function that takes a DataFrame as input
 def laadpalen_visualization(df):
+
+    
+    
     # Filter out missing values in 'AddressInfo.StateOrProvince'
     df_provinces = df.dropna(subset=['AddressInfo.StateOrProvince'])
 
@@ -171,7 +174,7 @@ def laadpalen_visualization(df):
 
 # Example of calling the function with a DataFrame
 # Load CSV data into a dataframe
-laadpalenpunt_met_state = pd.read_csv('laadpalenpunt_met_state.csv')
+# laadpalenpunt_met_state = pd.read_csv('laadpalenpunt_met_state.csv')
 
 # laadpalen_visualization(laadpalenpunt_met_state)
 

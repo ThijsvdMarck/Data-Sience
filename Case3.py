@@ -82,10 +82,10 @@ ElektrischeAutos = pd.read_csv(file_path) #moet nog met API en schoongemaakt wor
 
 
 # # Build the path to the CSV file in the subfolder
-# file_path = os.path.join(current_dir, 'DATA', 'laadpalenpunt_met_state.csv')
+file_path = os.path.join(current_dir, 'DATA', 'laadpalenpunt_met_state.csv')
 
 # # Reading csv file for Province of Netherlands approx missing 10% of total LaadpalenPunten
-# laadpalenpunt_met_state = pd.read_csv('laadpalenpunt_met_state.csv')
+laadpalenpunt_met_state = pd.read_csv(file_path)
 
 
 
@@ -97,19 +97,18 @@ tv.LayoutSettings()
 page = tv.DropdownForPageSelect()
 if page == "Laadpaal Punten":
     # "Laadpaal Punten"
-    print("Laadpaal Punten")
+    ma.laadpalen_kaart_adres_staat(LaadpalenPunten)
+    ma.laadpalen_visualization(laadpalenpunt_met_state)
 elif page == "Laadpaal Gebruik":
     # LaadpalenGebruik
     tl.gebruik(LaadpalenGebruik)
-    print("Laadpaal Gebruik")
 elif page == "Elektrische  Auto's":
     # ElektrischeAutos
     tv.plotAantalElektrischeAutosTegenDatum(ElektrischeAutos)
 
 
 
-ma.laadpalen_kaart_adres_staat(LaadpalenPunten)
-ma.laadpalen_visualization(laadpalenpunt_met_state)
+
 
 
 
