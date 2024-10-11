@@ -88,6 +88,19 @@ def gebruik(df):
     # Use the same x-as selection for fig2 as fig1
     if x_as_selectie == 'Days':
         new_kolom = 'start_day_of_week'
+        if 'ConnectedTime' in new_selectie:
+            connected_time_avg = lpg.groupby(new_kolom)['ConnectedTime'].mean()
+        if 'ChargeTime' in new_selectie:
+            charge_time_avg = lpg.groupby(new_kolom)['ChargeTime'].mean()
+
+        fig2 = go.Figure()
+        if 'ConnectedTime' in new_selectie:
+            fig2.add_trace(go.Bar(x=connected_time_avg.index, y=connected_time_avg.values, name='Connected Time', marker_color='blue'))
+        if 'ChargeTime' in new_selectie:
+            fig2.add_trace(go.Bar(x=charge_time_avg.index, y=charge_time_avg.values, name='Charge Time', marker_color='red'))
+
+        fig2.update_layout(xaxis_title='Days of the week', yaxis_title='Average Time', barmode='group')
+        st.plotly_chart(fig2)
     else:
         new_day_selectie = day_selectie  # use the same day selection as fig1
         if new_day_selectie:
@@ -104,13 +117,13 @@ def gebruik(df):
         if 'ChargeTime' in new_selectie:
             charge_time_avg = [lpg[lpg[new_kolom].round(1) == uur]['ChargeTime'].mean() for uur in uren]
 
-    fig2 = go.Figure()
-    if 'ConnectedTime' in new_selectie:
-        fig2.add_trace(go.Bar(x=uren, y=connected_time_avg, name='Connected Time', marker_color='blue'))
-    if 'ChargeTime' in new_selectie:
-        fig2.add_trace(go.Bar(x=uren, y=charge_time_avg, name='Charge Time', marker_color='red'))
+        fig2 = go.Figure()
+        if 'ConnectedTime' in new_selectie:
+            fig2.add_trace(go.Bar(x=uren, y=connected_time_avg, name='Connected Time', marker_color='blue'))
+        if 'ChargeTime' in new_selectie:
+            fig2.add_trace(go.Bar(x=uren, y=charge_time_avg, name='Charge Time', marker_color='red'))
 
-    if fig2 is not None:
-        fig2.update_layout(xaxis_title='Hour of the Day', yaxis_title='Average Time', barmode='group')
-        fig2.update_xaxes(dtick=1, tick0=1, tickmode='linear')
-        st.plotly_chart(fig2)
+        if fig2 is not None:
+            fig2.update_layout(xaxis_title='Hour of the Day', yaxis_title='Average Time', barmode='group')
+            fig2.update_xaxes(dtick=1, tick0=1, tickmode='linear')
+            st.plotly_chart(fig2)
