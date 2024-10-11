@@ -18,12 +18,12 @@ def LayoutSettings():
     )
     
     st.title('Informatie over verschillende elektische ascpeten')
-    st.write('Door Team 20: Tim Lind, Thijs van der Marck, Argenis, Mackenly')
+    st.write('Door Team 20: Tim Lind, Thijs van der Marck, Argenis de Mey, Mackenley Louis Jeune')
     st.write("""
     Op deze pagina vind je informatie over drie belangrijke onderwerpen die te maken hebben met elektrisch rijden:
 
     1. **Laadpaal Punten**: Alles over de locaties, beschikbaarheid en installatie van laadpalen voor elektrische voertuigen.
-    2. **Laadpaal Gebruik**: Inzicht in hoe laadpalen worden gebruikt, laadtijden, en tips voor efficiënt laden.
+    2. **Laadpaal Gebruik**: Inzicht in hoe laadpalen worden gebruik en laadtijden.
     3. **Elektrische Auto's**: Informatie over de nieuwste elektrische auto's, hun prestaties, voordelen en hoe ze bijdragen aan een duurzamere toekomst.
 
     Verken elk onderwerp om meer te ontdekken over de toekomst van elektrisch vervoer!
@@ -46,16 +46,25 @@ def plotAantalElektrischeAutosTegenDatum(df):
     st.title('Elektrische Auto\'s in Nederland')
 
 
-    brands = df['merk'].unique()
+    brands = np.append('All',df['merk'].unique())
 
     selected_brand = st.selectbox('Kies een automerk:', brands)
-    df_groupby_day = df[df['merk'] == selected_brand].groupby('datum_eerste_toelating').size().reset_index(name='car_count')
+
+    if selected_brand == 'All':
+        df_filtered = df
+    else:
+        df_filtered = df[df['merk'] == selected_brand]
+
+
+    #nog een totaal toevoegen
+
+    df_groupby_day = df_filtered.groupby('datum_eerste_toelating').size().reset_index(name='car_count')
     df_groupby_day['cumulative_count'] = df_groupby_day['car_count'].cumsum()
 
     fig = px.line(df_groupby_day, 
                 x='datum_eerste_toelating', 
                 y='cumulative_count', 
-                title='Totaal aantal %s elektrische Auto\'s in Nederland' % selected_brand, 
+                title='Totaal aantal extra %s elektrische Auto\'s in Nederland vanaf 2022' % selected_brand, 
                 labels={
                     'datum_eerste_toelating': 'Datum', 
                     'cumulative_count': 'Aantal %s elektrische Auto\'s ' % selected_brand
@@ -65,66 +74,35 @@ def plotAantalElektrischeAutosTegenDatum(df):
 
 
 
-    # # Streamlit UI opzetten
-    # st.title('CO2 Emissions per Country')
+    # Calculate the power-to-weight ratio
+    df['power_to_weight_ratio'] = df['vermogen_massarijklaar'] / df['massa_rijklaar']
 
-    # # Landen in dropdown selecteren 
-    # countries = df['Country'].unique()
-    # selected_country = st.selectbox('Select a country', countries)
-    # country_data = df[df['Country'] == selected_country]
+    st.title('Charging Efficiency: Power-to-Weight Ratio by Vehicle Weight')
 
-    # # Groepeer de data per jaar en maak lineplot met plotly voor CO2 emission
-    # country_data_groupby = country_data.groupby('Year')['CO2 emission (Tons)'].sum().reset_index()
-    # country_data_groupby_non_zero = country_data_groupby[country_data_groupby['CO2 emission (Tons)'] > 0]
-    # fig = px.line(country_data_groupby_non_zero, x='Year', y='CO2 emission (Tons)', title=f'CO2 Emissions in {selected_country} per year')
-    # fig.update_xaxes(dtick=10)
-    # fig.update_yaxes(range=[0, country_data_groupby['CO2 emission (Tons)'].max()])
-    # st.plotly_chart(fig)
+    # Create a list of unique brands
+    brands = df['merk'].unique()
 
+    # Create a multi-select widget for brand selection, starting with no default selection
+    selected_brands = st.multiselect('Select brands to display:', options=brands, default=[])
 
-    # # Filtered country data (only showing the first row)
-    # country_table = country_data[['Country', 'Area', '% of World', 'Population(2022)']]
+    # Filter the dataframe based on the selected brands
+    df_filtered = df[df['merk'].isin(selected_brands)]
 
-    # # KPIs for the selected country
-    # st.write(f"#### Key Metrics for {selected_country}")
-
-    # # Extracting the first row values for KPI
-    # area = country_table.iloc[0]['Area']
-    # percentage_of_world = country_table.iloc[0]['% of World']
-    # population = country_table.iloc[0]['Population(2022)']
-
-    # # Display KPIs in a clean 3-column layout
-    # col1, col2, col3 = st.columns(3)
-
-    # with col1:
-    #     st.metric(
-    #         label="Area",
-    #         value=f"{area:,.0f} km²",  # Formatting with commas for thousands
-    #         delta=None
-    #     )
-
-    # with col2:
-    #     st.metric(
-    #         label="% of World",
-    #         value=f"{percentage_of_world:.2f}%",  # Formatting with 2 decimal places for percentage
-    #         delta=None
-    #     )
-
-    # with col3:
-    #     st.metric(
-    #         label="Population (2022)",
-    #         value=f"{population:,.0f}",  # Formatting with commas for large numbers
-    #         delta=None
-    #     )
-
-    # # Add a separator line for better readability
-    # st.markdown("---")
-
-    # # Add some context text for the KPIs
-    # st.write("""
-    # ##### Notes:
-    # - **Area** refers to the total land area in square kilometers.
-    # - **% of World** shows the percentage of total global land area occupied by this country.
-    # - **Population (2022)** shows the estimated population of the country in 2022.
-    # """)
-# %%
+    # Only create the plot if at least one brand is selected
+    if not df_filtered.empty:
+        # Create the scatter plot
+        fig = px.scatter(df_filtered, 
+                        x='massa_rijklaar', 
+                        y='power_to_weight_ratio', 
+                        color='merk', 
+                        title='Charging Efficiency (Power-to-Weight Ratio) by Vehicle Weight',
+                        labels={'massa_rijklaar': 'Total Vehicle Mass (kg)', 'power_to_weight_ratio': 'Power-to-Weight Ratio'},
+                        category_orders={'merk': selected_brands},  # Ensures the legend order matches the selected brands
+                        hover_data={'handelsbenaming': True,  # Add model name (handelsbenaming) to hover info
+                                    'vermogen_massarijklaar': ':.2f',  # Optionally format power to two decimal places
+                                    'massa_rijklaar': True}  # Show mass in hover
+                        )
+        # Show the plot in Streamlit
+        st.plotly_chart(fig)
+    else:
+        st.write("Please select at least one brand to display the chart.")
