@@ -74,7 +74,12 @@ file_path = os.path.join(current_dir, 'DATA', 'cars.csv')
 # Reading the CSV file
 ElektrischeAutos = pd.read_csv(file_path) #moet nog met API en schoongemaakt worden
 
-
+# # Build the path to the CSV file in the subfolder
+file_path = os.path.join(current_dir, 'DATA', 'laadpalenpunt_met_state.csv')
+ 
+# # Reading csv file for Province of Netherlands approx missing 10% of total LaadpalenPunten
+laadpalenpunt_met_state = pd.read_csv(file_path)
+ 
 
 #%%__________________________________________________________________________________
 #%% Streamlit
@@ -84,6 +89,8 @@ tv.LayoutSettings()
 page = tv.DropdownForPageSelect()
 if page == "Laadpaal Punten":
     # "Laadpaal Punten"
+    ma.laadpalen_kaart_adres_staat(LaadpalenPunten)
+    ma.laadpalen_visualization(LaadpalenPunten)
     print("Laadpaal Punten")
 elif page == "Laadpaal Gebruik":
     # LaadpalenGebruik
